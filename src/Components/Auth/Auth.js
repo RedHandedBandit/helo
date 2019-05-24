@@ -1,12 +1,26 @@
 import React, {Component} from 'react';
+import axios from 'axios';
 
 export default class Auth extends Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
             username: '',
             password: ''
         }
+    }
+
+    registerUser = () => {
+        const { username, password } = this.state;
+        const newUser = {
+            username,
+            password
+        }
+        console.log('newuser', newUser)
+
+        axios.post('/register', newUser).then( res => {
+            this.props.history.push('/dashboard')
+        }).catch(error => console.log('didnt work retard',error))
     }
 
     handleLoginSubmit = (prop, val) => {
@@ -32,7 +46,7 @@ export default class Auth extends Component {
                     type="password"
                     />
                 <button> Login </button>
-                <button> Register </button>
+                <button onClick={() => this.registerUser()} > Register </button>
             </div>
         )
     }

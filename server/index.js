@@ -8,6 +8,7 @@ const { SESSION_SECRET, CONNECTION_STRING, SERVER_PORT } = process.env
 
 const app = express()
 
+app.use(express.json())
 app.use(session({
     secret: SESSION_SECRET,
     resave: false,
@@ -20,3 +21,4 @@ massive(CONNECTION_STRING).then( db => {
 }).catch( error => console.log('db broke',error))
 
 app.post('/register', ctlr.register)
+app.post('/login', ctlr.login)

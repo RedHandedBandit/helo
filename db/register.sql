@@ -5,4 +5,4 @@ insert into helo_user (
     ${username},
     ${hash}
 )
-returning username, id;
+returning *;
