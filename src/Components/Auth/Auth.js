@@ -23,6 +23,19 @@ export default class Auth extends Component {
         }).catch(error => console.log('didnt work retard',error))
     }
 
+    loginUser = () => {
+        const { username, password } = this.state
+        const existingUser = {
+            username,
+            password
+        }
+
+        axios.post('/login', existingUser).then( res => {
+            console.log(res)
+            this.props.history.push('/dashboard')
+        }).catch(error => console.log(error))
+    }
+
     handleLoginSubmit = (prop, val) => {
         this.setState({
             [prop]: val
@@ -45,7 +58,7 @@ export default class Auth extends Component {
                     value={this.state.password}
                     type="password"
                     />
-                <button> Login </button>
+                <button onClick={() => this.loginUser()} > Login </button>
                 <button onClick={() => this.registerUser()} > Register </button>
             </div>
         )

@@ -24,6 +24,7 @@ module.exports = {
     login: async (req, res) => {
         const {username, password } = req.body
         const db = req.app.get('db')
+        console.log('req.body',username, password)
 
         const foundUser = await db.login({username})
         const user = foundUser[0]
@@ -32,14 +33,14 @@ module.exports = {
             res.status(418).send('username not found')
         }
 
-        const isAuthenticated = bcrypt.compareSync(password, user.hash)
+        const isAuthenticated = bcrypt.compareSync(password, user.password)
         if(!isAuthenticated) {
             res.status(418).send('wrong password')
         }
 
-        delete user.hash
+        delete user.password
 
         req.session.user = user
-        res.status(418).send(req.session.user)
+        res.status(200).send(req.session.user)
     }
 }
